@@ -11,9 +11,9 @@ resource "google_container_cluster" "primary" {
   networking_mode          = "VPC_NATIVE"
 
   # Optional, if you want multi-zonal cluster
-  node_locations = [
-    "asia-east2-a"
-  ]
+  # node_locations = [
+  #   "asia-east2-a"
+  # ]
 
   addons_config {
     http_load_balancing {
