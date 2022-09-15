@@ -1,0 +1,42 @@
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nexus-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  local:
+    path: /
+  claimRef:
+    name: nexus-pvc
+    namespace: nexus-dev
+  storageClassName: ""
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        # failure-domain.beta.kubernetes.io/zone should be used prior to 1.21
+        - key: role
+          operator: In
+          values:
+          - general
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nexus-pvc
+  namespace: nexus-dev
+spec:
+  volumeName: nexus-pv
+  storageClassName: ""
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  selector:
+    matchLabels:
+      name: nexus-pv

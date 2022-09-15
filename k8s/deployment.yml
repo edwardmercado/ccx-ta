@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nexus
+  namespace: nexus-dev
+spec:
+  selector:
+    matchLabels:
+      app: nexus
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nexus
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role
+                operator: In
+                values:
+                - general
+      # initContainers:
+      # - name: volume-mount-hack
+      #   image: busybox
+      #   command: ["sh", "-c", "chown -R 200:200 /nexus-data"]
+      #   volumeMounts:
+      #   - name: nexus-data
+      #     mountPath: /nexus-data
+      # tolerations:
+      # - key: "node.kubernetes.io/unreachable:NoSchedule"
+      #   operator: "Exists"
+      containers:
+        - name: nexus
+          image: gcr.io/ccx-technical-assesment/nexus3:latest
+          ports:
+            - containerPort: 8081
+          resources:
+            limits:
+              memory: "4Gi"
+              cpu: "1000m"
+            requests:
+              memory: "4Gi"
+              cpu: "1000m"
+          # volumeMounts:
+          #   - name: nexus-data
+          #     mountPath: /nexus-data
+      volumes:
+        - name: nexus-data
+          persistentVolumeClaim:
+            claimName: nexus-pvc
