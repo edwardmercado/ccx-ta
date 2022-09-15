@@ -32,7 +32,7 @@ See `k8s/nginx.yml` file.
 ### Infrastructure Pipeline
 - 1a. Developer push codes to the repository
 - 2a. Push action will trigger Cloud Build
-- 3a. `Cloud Build` will run the terraform commands and deploy or update the `Google Kubernetes Engine` and its infrastructure.
+- 3a. `Cloud Build` will run the terraform commands and deploy or update the `Google Kubernetes Engine` together with its components and infrastructure.
 
 ### Application Pipeline
 - 1b. Developer push codes to the repository
