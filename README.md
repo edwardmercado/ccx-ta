@@ -1,13 +1,19 @@
 # ccx-ta
 **URL:** http://35.241.98.136/
 
+## Details
+**Project Id:** ccx-technical-assesment
+
 ## Ingress Controller
 
-### Installation 
+### Helm Installation 
 
 ```
 helm repo add ingress-nginx \
   https://kubernetes.github.io/ingress-nginx
+```
+```
+helm repo update
 ```
 ```
 helm install my-ing ingress-nginx/ingress-nginx \
@@ -17,5 +23,5 @@ helm install my-ing ingress-nginx/ingress-nginx \
   --create-namespace
 ```
 
-### Configuration
+### Nginx Controller Configuration
 See `k8s/nginx.yml` file.
