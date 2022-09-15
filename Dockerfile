@@ -48,6 +48,7 @@ ENV NEXUS_HOME=${SONATYPE_DIR}/nexus \
     NEXUS_CONTEXT='' \
     SONATYPE_WORK=${SONATYPE_DIR}/sonatype-work \
     DOCKER_TYPE='rh-docker'
+ENV GOOGLE_APPLICATION_CREDENTIALS=${NEXUS_DATA}/ccx-technical-assesment-e4421e7ff97d.json
 
 # Install Java & tar
 RUN microdnf update -y \
@@ -83,7 +84,10 @@ RUN curl -L ${NEXUS_BLOB_STORAGE} --output nexus-blobstore-google-cloud-0.41.0.k
 
 # Copy permission
 COPY creds/ccx-technical-assesment-e4421e7ff97d.json ${NEXUS_DATA}
-RUN export GOOGLE_APPLICATION_CREDENTIALS=${NEXUS_DATA}/ccx-technical-assesment-e4421e7ff97d.json
+# RUN export GOOGLE_APPLICATION_CREDENTIALS=${NEXUS_DATA}/ccx-technical-assesment-e4421e7ff97d.json
+
+# Change volume permission
+RUN chown -R 200:200 ${NEXUS_DATA}
 
 VOLUME ${NEXUS_DATA}
 
